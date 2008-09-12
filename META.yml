@@ -1,0 +1,46 @@
+--- #YAML:1.0
+name:                   Parse-CPAN-Distributions
+version:                0.01
+abstract:               Provides an index for current CPAN distributions
+author:
+  - Barbie <barbie@cpan.org>
+
+license:                perl
+distribution_type:      module
+installdirs:            site
+
+requires:
+  Compress::Zlib:       0
+  CPAN::DistnameInfo:   0
+  File::Basename:       0
+  File::Path:           0
+  File::Slurp:          0
+  IO::Zlib:             0
+  LWP::UserAgent:       0
+  Test::More:           0.70
+  version:              0
+recommends:
+  Test::More:           0.70
+  Test::Pod:            1.00
+  Test::Pod::Coverage:  0.08
+  Test::CPAN::Meta:     0.12
+build_requires:
+  Test::More:           0.70
+
+provides:
+  Parse::CPAN::Distributions:
+    file:     lib/Parse/CPAN/Distributions.pm
+    version:  0.01
+no_index:
+  directory:
+    - t
+    - examples
+
+resources:
+  license:    http://dev.perl.org/licenses/
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Parse-CPAN-Distributions
+
+meta-spec:
+   version:   1.4
+   url:       http://module-build.sourceforge.net/META-spec-v1.4.html
+generated_by: Hand 1.0

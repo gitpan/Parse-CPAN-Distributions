@@ -1,0 +1,16 @@
+Artistic
+Changes
+examples/examples.txt
+lib/Parse/CPAN/Distributions.pm
+LICENSE
+Makefile.PL
+MANIFEST
+META.yml
+README
+t/01load.t
+t/02methods.t
+t/90podtest.t
+t/91podcover.t
+t/94metatest.t
+t/samples/find-ls
+t/samples/find-ls.gz
