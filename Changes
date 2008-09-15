@@ -1,5 +1,8 @@
 # Changes log for Parse::CPAN::Distributions
 
+0.03    15/09/2008
+	- forgot IO::File dependency :(
+
 0.02    15/09/2008
 	- download/parse method rewritten to reduce memory load.
 

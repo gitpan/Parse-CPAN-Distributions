@@ -8,6 +8,7 @@ WriteMakefile(
         File::Path          => 0,
         File::Slurp         => 0,
         File::Temp          => 0,
+        IO::File            => 0,
         IO::Zlib            => 0,
         LWP::UserAgent      => 0,
 		Test::More	        => 0.70,	# for testing

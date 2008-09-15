@@ -3,7 +3,7 @@ package Parse::CPAN::Distributions;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 #----------------------------------------------------------------------------
 
@@ -33,6 +33,7 @@ use File::Basename;
 use File::Path;
 use File::Slurp;
 use File::Temp  qw(tempfile);
+use IO::File;
 use IO::Zlib;
 use LWP::UserAgent;
 use version;

@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                   Parse-CPAN-Distributions
-version:                0.02
+version:                0.03
 abstract:               Provides an index for current CPAN distributions
 author:
   - Barbie <barbie@cpan.org>
@@ -15,6 +15,7 @@ requires:
   File::Path:           0
   File::Slurp:          0
   File::Temp:           0
+  IO::File:             0
   IO::Zlib:             0
   LWP::UserAgent:       0
   Test::More:           0.70
@@ -30,7 +31,7 @@ build_requires:
 provides:
   Parse::CPAN::Distributions:
     file:     lib/Parse/CPAN/Distributions.pm
-    version:  0.02
+    version:  0.03
 no_index:
   directory:
     - t
