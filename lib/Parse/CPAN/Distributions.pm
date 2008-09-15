@@ -3,7 +3,7 @@ package Parse::CPAN::Distributions;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 #----------------------------------------------------------------------------
 
@@ -28,11 +28,11 @@ currently listed on CPAN. This is done by parsing the index file find-ls.
 #----------------------------------------------------------------------------
 # Library Modules
 
-use Compress::Zlib;
 use CPAN::DistnameInfo;
 use File::Basename;
 use File::Path;
 use File::Slurp;
+use File::Temp  qw(tempfile);
 use IO::Zlib;
 use LWP::UserAgent;
 use version;
@@ -181,50 +181,54 @@ Parse find-ls, extracting the list of all the module distributions.
 
 sub parse {
     my $self = shift;
-    my $data = $self->_slurp_details();
-
-    for my $line (split "\n", $data) {
-        next    unless($line =~ m!(authors/id/[A-Z]/../[^/]+/.*$archive)!);
-        my $dist = CPAN::DistnameInfo->new($1);
-        next    unless($dist && $dist->dist && $dist->version);
-
-        #print STDERR "# line   =[$line]\n";
-        #print STDERR "# dist   =[".($dist->dist)."]\n";
-        #print STDERR "# version=[".($dist->version)."]\n";
-        #print STDERR "# author =[".($dist->cpanid)."]\n";
-
-        $distros{ $dist->dist }->{ $dist->version } = $dist->cpanid;
-        push @{$authors{ $dist->cpanid }{ $dist->dist }}, $dist->version;
-    }
-}
-
-# read the file into memory and return it
-sub _slurp_details {
-    my $self = shift;
+    my $temp = 0;
 
     #print STDERR "#file=$self->{file}\n";
 
-    if($self->{file} && -f $self->{file}) {
-        if ( $self->{file} =~ /\.gz/ ) {
-            my $fh = IO::Zlib->new( $self->{file}, "rb" )
-                || die "Failed to read archive [$self->{file}]: $!";
-            return join '', <$fh>;
-        }
+    unless($self->{file} && -f $self->{file}) {
+        my $url = 'http://www.cpan.org/indices/find-ls.gz';
+        my $ua  = LWP::UserAgent->new;
+        $ua->timeout(180);
 
-        return read_file($self->{file});
+        my ($fh, $filename) = tempfile( 'find-ls-XXXX', SUFFIX => '.gz', UNLINK => 0);
+
+        my $response = $ua->mirror($url,$filename);
+        if (!$response->is_success) {
+            die "Error fetching $url";
+        }
+        $self->{file} = $filename;
+        $temp = 1;
     }
 
-    my $url = 'http://www.cpan.org/indices/find-ls.gz';
-    my $ua  = LWP::UserAgent->new;
-    $ua->timeout(180);
-    my $response = $ua->get($url);
+    if($self->{file} && -f $self->{file}) {
+        my $fh;
+        if ( $self->{file} =~ /\.gz/ ) {
+            $fh = IO::Zlib->new( $self->{file}, "rb" )
+                || die "Failed to read archive [$self->{file}]: $!";
+            return join '', <$fh>;
+        } else {
+            $fh = IO::File->new( $self->{file}, 'r' )
+                || die "Failed to read file [$self->{file}]: $!";
+        }
 
-    if ($response->is_success) {
-        my $gzipped = $response->content;
-        my $data = Compress::Zlib::memGunzip($gzipped);
-        return $data || die "Error uncompressing data from $url";
+        while(<$fh>) {
+            next    if(/(readme|meta)$/);
+            next    unless(m!\s(authors/id/[A-Z]/../[^/]+/.*$archive)!);
+            my $dist = CPAN::DistnameInfo->new($1);
+            next    unless($dist && $dist->dist && $dist->version);
+
+            #print STDERR "# line   =[$line]\n";
+            #print STDERR "# dist   =[".($dist->dist)."]\n";
+            #print STDERR "# version=[".($dist->version)."]\n";
+            #print STDERR "# author =[".($dist->cpanid)."]\n";
+
+            $distros{ $dist->dist }->{ $dist->version } = $dist->cpanid;
+            push @{$authors{ $dist->cpanid }{ $dist->dist }}, $dist->version;
+        }
+
+        unlink($self->{file})   if($temp);
     } else {
-        die "Error fetching $url";
+        die "Error locating file [$self->{file}]";
     }
 }
 
