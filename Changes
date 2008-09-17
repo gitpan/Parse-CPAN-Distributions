@@ -1,5 +1,8 @@
 # Changes log for Parse::CPAN::Distributions
 
+0.04    17/09/2008
+	- added author_of() method.
+
 0.03    15/09/2008
 	- forgot IO::File dependency :(
 

@@ -3,7 +3,7 @@ package Parse::CPAN::Distributions;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 #----------------------------------------------------------------------------
 
@@ -13,10 +13,13 @@ Parse::CPAN::Distributions - Provides an index for current CPAN distributions
 
 =head1 SYNOPSIS
 
-  my $oncpan = Parse::CPAN::Distributions->new(database => $db);
-  my $found  = $oncpan->listed($distribution,$version);
-  my $any    = $oncpan->listed($distribution);
-  my @dists  = $oncpan->distributions_by($author);
+  my $oncpan   = Parse::CPAN::Distributions->new(database => $db);
+  my $found    = $oncpan->listed($distribution,$version);
+  my $any      = $oncpan->listed($distribution);
+  my @dists    = $oncpan->distributions_by($author);
+  my $author   = $oncpan->author_of($distribution,$version);
+  my $version  = $oncpan->latest_version($distribution);
+  my @versions = $oncpan->versions($distribution);
 
 =head1 DESCRIPTION
 
@@ -108,6 +111,24 @@ sub distributions_by {
     return ()   unless(defined $author);
     return ()   unless(defined $authors{$author});
     return sort keys %{$authors{$author}};
+}
+
+=item author_of
+
+Given a distribution and version, returns the author ID if available on CPAN,
+otherwise undef is returned.
+
+=cut
+
+sub author_of {
+    my ($self,$distribution,$version) = @_;
+
+    return  unless(defined $distribution);
+    return  unless(defined $distros{$distribution});
+    return  unless(defined $version);
+    return $distros{$distribution}->{$version}
+            if($distros{$distribution}->{$version});
+    return;
 }
 
 =item latest_version
