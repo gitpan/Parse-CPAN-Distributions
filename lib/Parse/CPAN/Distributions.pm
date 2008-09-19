@@ -3,7 +3,7 @@ package Parse::CPAN::Distributions;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 #----------------------------------------------------------------------------
 
@@ -227,7 +227,6 @@ sub parse {
         if ( $self->{file} =~ /\.gz/ ) {
             $fh = IO::Zlib->new( $self->{file}, "rb" )
                 || die "Failed to read archive [$self->{file}]: $!";
-            return join '', <$fh>;
         } else {
             $fh = IO::File->new( $self->{file}, 'r' )
                 || die "Failed to read file [$self->{file}]: $!";

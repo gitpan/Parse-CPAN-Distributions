@@ -1,4 +1,8 @@
-# Changes log for Parse::CPAN::Distributions
+# Changes log for Parse-CPAN-Distributions
+
+0.05    19/09/2008
+	- fixed bug where internal hash was not created correctly for gzipped
+	  file.
 
 0.04    17/09/2008
 	- added author_of() method.
