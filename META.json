@@ -1,0 +1,68 @@
+{
+    "name" : "Parse-CPAN-Distributions",
+    "version" : "0.06",
+    "abstract" : "Provides an index for current CPAN distributions",
+    "author" : [
+        "Barbie <barbie@cpan.org>"
+    ],
+    "release_status" : "stable",
+    "dynamic_config" : 0,
+    "generated_by" : "Hand 1.0",
+    "license" : [
+        "artistic_2"
+    ],
+    "meta-spec" : {
+        "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+        "version" : "2"
+    },
+    "no_index" : {
+        "directory" : [
+            "t",
+            "examples"
+        ]
+    },
+
+    "prereqs" : {
+        "build" : {
+            "requires" : {
+                "ExtUtils::MakeMaker" : "0"
+            }
+        },
+        "test" : {
+            "requires" : {
+                "Test::More" : "0.70"
+            },
+            "recommends" : {
+                "Test::CPAN::Meta": "0",
+                "Test::CPAN::Meta::JSON": "0",
+                "Test::Pod": "1.00",
+                "Test::Pod::Coverage": "0.08"
+            }
+        },
+        "runtime" : {
+            "requires" : {
+                "perl": "5.006",
+                "CPAN::DistnameInfo" : "0",
+                "File::Basename" : "0",
+                "File::Path" : "0",
+                "File::Slurp" : "0",
+                "File::Temp" : "0",
+                "IO::File" : "0",
+                "IO::Zlib" : "0",
+                "LWP::UserAgent" : "0",
+                "version" : "0"
+            }
+        }
+    },
+
+    "provides" : {
+        "Parse::CPAN::Distributions" : {
+            "file" : "lib/Parse/CPAN/Distributions.pm",
+            "version" : "0.06"
+        }
+    },
+
+    "resources": {
+        "bugtracker": { "web": "http://rt.cpan.org/Public/Dist/Display.html?Name=Parse-CPAN-Distributions" }
+    }
+}

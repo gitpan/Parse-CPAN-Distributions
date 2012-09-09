@@ -1,9 +1,10 @@
 package Parse::CPAN::Distributions;
 
 use strict;
+use warnings;
 use vars qw($VERSION);
 
-$VERSION = '0.05';
+$VERSION = '0.06';
 
 #----------------------------------------------------------------------------
 
@@ -84,7 +85,7 @@ sub new {
 =item listed
 
 Given a distribution and version, returns 1 if on CPAN, otherwise 0. Note that
-if version is not provides it will assume you are looking for any version.
+if version is not provided it will assume you are looking for any version.
 
 =cut
 
@@ -110,7 +111,8 @@ sub distributions_by {
 
     return ()   unless(defined $author);
     return ()   unless(defined $authors{$author});
-    return sort keys %{$authors{$author}};
+    my @dists = sort keys %{$authors{$author}};
+    return @dists;
 }
 
 =item author_of
@@ -212,45 +214,50 @@ sub parse {
         my $ua  = LWP::UserAgent->new;
         $ua->timeout(180);
 
-        my ($fh, $filename) = tempfile( 'find-ls-XXXX', SUFFIX => '.gz', UNLINK => 0);
-
-        my $response = $ua->mirror($url,$filename);
-        if (!$response->is_success) {
-            die "Error fetching $url";
-        }
+        my $filename='find-ls-temp.gz';
+        my $response;
+        eval { $response = $ua->mirror($url,$filename) };
+        #use Data::Dumper;
+        #print STDERR "#url=[$url], filename=[$filename], response=[".Dumper($response)."] [$@]\n";
+        die "Error fetching $url [$@]"  if($@ || ! -f $filename);
         $self->{file} = $filename;
         $temp = 1;
     }
 
-    if($self->{file} && -f $self->{file}) {
-        my $fh;
-        if ( $self->{file} =~ /\.gz/ ) {
-            $fh = IO::Zlib->new( $self->{file}, "rb" )
-                || die "Failed to read archive [$self->{file}]: $!";
-        } else {
-            $fh = IO::File->new( $self->{file}, 'r' )
-                || die "Failed to read file [$self->{file}]: $!";
-        }
-
-        while(<$fh>) {
-            next    if(/(readme|meta)$/);
-            next    unless(m!\s(authors/id/[A-Z]/../[^/]+/.*$archive)!);
-            my $dist = CPAN::DistnameInfo->new($1);
-            next    unless($dist && $dist->dist && $dist->version);
-
-            #print STDERR "# line   =[$line]\n";
-            #print STDERR "# dist   =[".($dist->dist)."]\n";
-            #print STDERR "# version=[".($dist->version)."]\n";
-            #print STDERR "# author =[".($dist->cpanid)."]\n";
-
-            $distros{ $dist->dist }->{ $dist->version } = $dist->cpanid;
-            push @{$authors{ $dist->cpanid }{ $dist->dist }}, $dist->version;
-        }
-
-        unlink($self->{file})   if($temp);
+    my $fh;
+    if ( $self->{file} =~ /\.gz/ ) {
+        $fh = IO::Zlib->new( $self->{file}, "rb" )
+            || die "Failed to read archive [$self->{file}]: $!";
     } else {
-        die "Error locating file [$self->{file}]";
+        $fh = IO::File->new( $self->{file}, 'r' )
+            || die "Failed to read file [$self->{file}]: $!";
     }
+
+    while(<$fh>) {
+        s/\s+$//;
+        #print STDERR "# line   =[$_]\n";
+
+        next    unless(m!\s(authors/id/[A-Z]/../[^/]+/.*$archive)!);
+
+        #print STDERR "# file   =[$1]\n";
+
+        my $dist = CPAN::DistnameInfo->new($1);
+
+        #print STDERR "# dist   =[".($dist ? 'OBJECT' : 'undef')."]\n";
+
+        next    unless($dist && $dist->dist);
+
+        #print STDERR "# dist   =[".($dist->dist)."]\n";
+        #print STDERR "# version=[".($dist->version)."]\n";
+        #print STDERR "# author =[".($dist->cpanid)."]\n";
+
+        my $version = $dist->version || '';
+
+        $distros{ $dist->dist }->{ $version } = $dist->cpanid;
+        push @{$authors{ $dist->cpanid }{ $dist->dist }}, $version;
+    }
+
+    unlink($self->{file})   if($temp);
 }
 
 q("Everybody loves QA Automation!");
@@ -265,7 +272,7 @@ There are no known bugs at the time of this release. However, if you spot a
 bug or are experiencing difficulties, that is not explained within the POD
 documentation, please send bug reports and patches to the RT Queue (see below).
 
-Fixes are dependant upon their severity and my availablity. Should a fix not
+Fixes are dependent upon their severity and my availability. Should a fix not
 be forthcoming, please feel free to (politely) remind me.
 
 RT: http://rt.cpan.org/Public/Dist/Display.html?Name=Parse-CPAN-Distributions
@@ -282,10 +289,9 @@ L<Parse-CPAN-Packages>
 
 =head1 COPYRIGHT AND LICENSE
 
-  Copyright (C) 2008 Barbie for Miss Barbell Productions.
+  Copyright (C) 2008-2012 Barbie for Miss Barbell Productions.
 
-  This module is free software; you can redistribute it and/or
-  modify it under the same terms as Perl itself.
+This module is free software; you can redistribute it and/or
+modify it under the Artistic License v2.
 
 =cut
-
