@@ -14,17 +14,26 @@ SKIP: {
     skip "No connection", 6 unless($response->is_success);
     {
         my $obj = Parse::CPAN::Distributions->new(file => '');
-        isa_ok($obj,'Parse::CPAN::Distributions');
-        is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+        SKIP: {
+            skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
+            isa_ok($obj,'Parse::CPAN::Distributions');
+            is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+        }
     }
     {
         my $obj = Parse::CPAN::Distributions->new();
-        isa_ok($obj,'Parse::CPAN::Distributions');
-        is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+        SKIP: {
+            skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
+            isa_ok($obj,'Parse::CPAN::Distributions');
+            is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+        }
     }
     {
         my $obj = Parse::CPAN::Distributions->new(file => 't/samples/nofile');
-        isa_ok($obj,'Parse::CPAN::Distributions');
-        is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+        SKIP: {
+            skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
+            isa_ok($obj,'Parse::CPAN::Distributions');
+            is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+        }
     }
 }

@@ -1,5 +1,9 @@
 # Changes log for Parse-CPAN-Distributions
 
+0.07	2012-09-19
+	- reworked live file access errors.
+	- return errors don't die.
+
 0.06	2012-09-02
         - removed Artistic file.
 	- spelling fix. (thanks to Florian Schlichting & Gregor Herrmann).

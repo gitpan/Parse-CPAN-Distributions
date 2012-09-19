@@ -2,9 +2,9 @@ package Parse::CPAN::Distributions;
 
 use strict;
 use warnings;
-use vars qw($VERSION);
+use vars qw($VERSION $ERROR);
 
-$VERSION = '0.06';
+$VERSION = '0.07';
 
 #----------------------------------------------------------------------------
 
@@ -47,6 +47,7 @@ use version;
 
 my (%distros,%authors);
 my $archive = qr{\.(?:tar\.(?:bz2|gz|Z)|t(?:gz|bz)|zip)$}i;
+$ERROR = '';
 
 # -------------------------------------
 # Routines
@@ -65,6 +66,9 @@ Takes one optional hash key/pair, 'file', which can be used to specify the
 path an existing compressed or uncompressed 'find-ls' file. By default a copy
 will be downloaded and automatically loaded into memory.
 
+If new returns undef, $Parse::CPAN::Distributions::ERROR will contain the
+error message recorded.
+
 =back
 
 =cut
@@ -74,7 +78,11 @@ sub new {
     my $self = { file => $hash{file} };
     bless $self, $class;
 
-    $self->parse;
+    if(my $error = $self->parse) {
+        $ERROR = $error;
+        return;
+    }
+
     return $self;
 }
 
@@ -219,7 +227,7 @@ sub parse {
         eval { $response = $ua->mirror($url,$filename) };
         #use Data::Dumper;
         #print STDERR "#url=[$url], filename=[$filename], response=[".Dumper($response)."] [$@]\n";
-        die "Error fetching $url [$@]"  if($@ || ! -f $filename);
+        return "Error fetching $url [$@]"  if($@ || ! -f $filename);
         $self->{file} = $filename;
         $temp = 1;
     }
@@ -227,10 +235,10 @@ sub parse {
     my $fh;
     if ( $self->{file} =~ /\.gz/ ) {
         $fh = IO::Zlib->new( $self->{file}, "rb" )
-            || die "Failed to read archive [$self->{file}]: $!";
+            || return "Failed to read archive [$self->{file}]: $!";
     } else {
         $fh = IO::File->new( $self->{file}, 'r' )
-            || die "Failed to read file [$self->{file}]: $!";
+            || return "Failed to read file [$self->{file}]: $!";
     }
 
     while(<$fh>) {
@@ -258,6 +266,7 @@ sub parse {
     }
 
     unlink($self->{file})   if($temp);
+    return;
 }
 
 q("Everybody loves QA Automation!");
