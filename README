@@ -10,23 +10,27 @@ DEPENDENCIES
 
 The distribution requires the following modules:
 
-  Compress::Zlib      >= 0
-  CPAN::DistnameInfo  >= 0
-  File::Basename      >= 0
-  File::Path          >= 0
-  File::Slurp         >= 0
-  IO::Zlib            >= 0
-  LWP::UserAgent      >= 0
+  CPAN::DistnameInfo
+  File::Basename
+  File::Path
+  File::Slurp
+  File::Temp
+  IO::File
+  IO::Zlib
+  LWP::UserAgent
+  version
 
 For testing purposes, the following modules are required:
 
-  Test::More          >= 0.70
+  IO::File
+  Test::More
 
 For testing purposes, the following modules are desireable, but not essential:
 
-  Test::Pod           >= 1.00
-  Test::Pod::Coverage >= 0.08
-  Test::CPAN::Meta    >= 0.12
+  Test::CPAN::Meta
+  Test::CPAN::Meta::JSON
+  Test::Pod
+  Test::Pod::Coverage
 
 INSTALLATION
 
@@ -67,7 +71,7 @@ for Miss Barbell Productions http://www.missbarbell.co.uk.
 
 COPYRIGHT AND LICENSE
 
-  Copyright (C) 2008-2012 Barbie for Miss Barbell Productions.
+  Copyright (C) 2008-2013 Barbie for Miss Barbell Productions.
 
-This module is free software; you can redistribute it and/or
+This distribution is free software; you can redistribute it and/or
 modify it under the Artistic License v2.

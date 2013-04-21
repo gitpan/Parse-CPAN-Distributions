@@ -1,34 +1,38 @@
 # Changes log for Parse-CPAN-Distributions
 
-0.07	2012-09-19
-	- reworked live file access errors.
-	- return errors don't die.
+0.08    2013-04-21
+        - updated license paths.
+        - updated test data due to old dists being removed from CPAN.
 
-0.06	2012-09-02
+0.07    2012-09-19
+        - reworked live file access errors.
+        - return errors don't die.
+
+0.06    2012-09-02
         - removed Artistic file.
-	- spelling fix. (thanks to Florian Schlichting & Gregor Herrmann).
+        - spelling fix. (thanks to Florian Schlichting & Gregor Herrmann).
         - License updated to Artistic License v2.0.
         - remove DSLIP info, as its no longer used.
         - reworked Makefile.PL for clarity.
-	- added minimum perl version (5.006).
-	- META tests no longer require specific versions.
-	- implemented Perl::Critic suggestions.
+        - added minimum perl version (5.006).
+        - META tests no longer require specific versions.
+        - implemented Perl::Critic suggestions.
         - added META.json and test script.
-	- change file dates changed to meet W3CDTF standards.
-	- more tests.
+        - change file dates changed to meet W3CDTF standards.
+        - more tests.
 
 0.05    2008-09-19
-	- fixed bug where internal hash was not created correctly for gzipped
-	  file.
+        - fixed bug where internal hash was not created correctly for gzipped
+          file.
 
 0.04    2008-09-17
-	- added author_of() method.
+        - added author_of() method.
 
 0.03    2008-09-15
-	- forgot IO::File dependency :(
+        - forgot IO::File dependency :(
 
 0.02    2008-09-15
-	- download/parse method rewritten to reduce memory load.
+        - download/parse method rewritten to reduce memory load.
 
 0.01    2008-09-12
         - Initial release.

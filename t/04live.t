@@ -17,7 +17,7 @@ SKIP: {
         SKIP: {
             skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
             isa_ok($obj,'Parse::CPAN::Distributions');
-            is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+            is($obj->author_of('Parse-CPAN-Distributions','0.07'),'BARBIE');
         }
     }
     {
@@ -25,7 +25,7 @@ SKIP: {
         SKIP: {
             skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
             isa_ok($obj,'Parse::CPAN::Distributions');
-            is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+            is($obj->author_of('Parse-CPAN-Distributions','0.07'),'BARBIE');
         }
     }
     {
@@ -33,7 +33,7 @@ SKIP: {
         SKIP: {
             skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
             isa_ok($obj,'Parse::CPAN::Distributions');
-            is($obj->author_of('CPAN-WWW-Testers-Generator','0.31'),'BARBIE');
+            is($obj->author_of('Parse-CPAN-Distributions','0.07'),'BARBIE');
         }
     }
 }

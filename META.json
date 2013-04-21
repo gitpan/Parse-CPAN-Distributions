@@ -1,6 +1,6 @@
 {
     "name" : "Parse-CPAN-Distributions",
-    "version" : "0.07",
+    "version" : "0.08",
     "abstract" : "Provides an index for current CPAN distributions",
     "author" : [
         "Barbie <barbie@cpan.org>"
@@ -58,11 +58,12 @@
     "provides" : {
         "Parse::CPAN::Distributions" : {
             "file" : "lib/Parse/CPAN/Distributions.pm",
-            "version" : "0.07"
+            "version" : "0.08"
         }
     },
 
     "resources": {
+        "license": "http://www.perlfoundation.org/artistic_license_2_0",
         "bugtracker": { "web": "http://rt.cpan.org/Public/Dist/Display.html?Name=Parse-CPAN-Distributions" }
     }
 }
