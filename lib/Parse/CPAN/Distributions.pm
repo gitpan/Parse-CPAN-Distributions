@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use vars qw($VERSION $ERROR);
 
-$VERSION = '0.08';
+$VERSION = '0.09';
 
 #----------------------------------------------------------------------------
 
@@ -298,7 +298,7 @@ L<Parse-CPAN-Packages>
 
 =head1 COPYRIGHT AND LICENSE
 
-  Copyright (C) 2008-2013 Barbie for Miss Barbell Productions.
+  Copyright (C) 2008-2014 Barbie for Miss Barbell Productions.
 
 This distribution is free software; you can redistribute it and/or
 modify it under the Artistic License v2.

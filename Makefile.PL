@@ -8,7 +8,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     AUTHOR              => 'Barbie <barbie@cpan.org>',
-    NAME                => 'Parse::CPAN::Distributions',
+    NAME                => 'Parse-CPAN-Distributions',
     VERSION_FROM        => 'lib/Parse/CPAN/Distributions.pm',
     ABSTRACT	        => 'Provides an index for current CPAN distributions',
     NO_META             => 1,
