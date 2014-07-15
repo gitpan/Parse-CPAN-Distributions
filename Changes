@@ -1,6 +1,9 @@
 Changes log for Parse-CPAN-Distributions
 ========================================
 
+0.10    2014-07-15
+        - fixed tests to test correct versions.
+
 0.09    2014-06-19
         - fixed distribution name in META.
         - added git repository links to metadata.

@@ -3,7 +3,9 @@ use strict;
 
 use LWP::UserAgent;
 use Parse::CPAN::Distributions;
-use Test::More  tests => 6;
+use Test::More  tests => 8;
+
+my $version = '0.09';
 
 my $ua = LWP::UserAgent->new;
 $ua->timeout(10);
@@ -17,7 +19,7 @@ SKIP: {
         SKIP: {
             skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
             isa_ok($obj,'Parse::CPAN::Distributions');
-            is($obj->author_of('Parse-CPAN-Distributions','0.07'),'BARBIE');
+            is($obj->author_of('Parse-CPAN-Distributions',$version),'BARBIE');
         }
     }
     {
@@ -25,7 +27,7 @@ SKIP: {
         SKIP: {
             skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
             isa_ok($obj,'Parse::CPAN::Distributions');
-            is($obj->author_of('Parse-CPAN-Distributions','0.07'),'BARBIE');
+            is($obj->author_of('Parse-CPAN-Distributions',$version),'BARBIE');
         }
     }
     {
@@ -33,7 +35,16 @@ SKIP: {
         SKIP: {
             skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
             isa_ok($obj,'Parse::CPAN::Distributions');
-            is($obj->author_of('Parse-CPAN-Distributions','0.07'),'BARBIE');
+            is($obj->author_of('Parse-CPAN-Distributions',$version),'BARBIE');
+        }
+    }
+
+    {
+        my $obj = Parse::CPAN::Distributions->new();
+        SKIP: {
+            skip "Unable to retrieve file: $Parse::CPAN::Distributions::ERROR", 2 unless($obj);
+            isa_ok($obj,'Parse::CPAN::Distributions');
+            is($obj->author_of('Parse-CPAN-Distributions','0.01'),undef,'no longer on CPAN');
         }
     }
 }
