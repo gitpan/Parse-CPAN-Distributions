@@ -13,7 +13,7 @@ $ua->timeout(10);
 my $response = $ua->get('http://www.cpan.org');
 
 SKIP: {
-    skip "No connection", 6 unless($response->is_success);
+    skip "No connection", 8 unless($response->is_success);
     {
         my $obj = Parse::CPAN::Distributions->new(file => '');
         SKIP: {
