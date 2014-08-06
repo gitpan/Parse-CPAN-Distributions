@@ -1,6 +1,9 @@
 Changes log for Parse-CPAN-Distributions
 ========================================
 
+0.13    2014-08-06
+        - fixed POD typo.
+
 0.12    2014-08-06
         - use previous version in live tests, to avoid versions not on CPAN.
 

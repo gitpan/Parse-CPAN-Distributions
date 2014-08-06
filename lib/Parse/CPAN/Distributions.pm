@@ -4,11 +4,11 @@ use strict;
 use warnings;
 use vars qw($VERSION $ERROR);
 
-$VERSION = '0.12';
+$VERSION = '0.13';
 
 #----------------------------------------------------------------------------
 
-=head1 NAM2
+=head1 NAME
 
 Parse::CPAN::Distributions - Provides an index for current CPAN distributions
 
