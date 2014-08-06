@@ -1,6 +1,9 @@
 Changes log for Parse-CPAN-Distributions
 ========================================
 
+0.12    2014-08-06
+        - use previous version in live tests, to avoid versions not on CPAN.
+
 0.11    2014-07-25
         - fixed skip value in live tests.
 

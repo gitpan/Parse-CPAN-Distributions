@@ -1,11 +1,22 @@
 #!/usr/bin/perl -w
 use strict;
 
+use IO::File;
 use LWP::UserAgent;
 use Parse::CPAN::Distributions;
 use Test::More  tests => 8;
 
-my $version = '0.09';
+use Parse::CPAN::Distributions;
+my $version = $Parse::CPAN::Distributions::VERSION;
+
+my $fh = IO::File->new('Changes','r')   or plan skip_all => "Cannot open Changes file";
+while(<$fh>) {
+    next    unless(m!^\d!);
+    next    if(m!^$version!);
+    ($version) = $_ =~ /^([\d.]+)/;
+    last;
+}
+$fh->close;
 
 my $ua = LWP::UserAgent->new;
 $ua->timeout(10);
