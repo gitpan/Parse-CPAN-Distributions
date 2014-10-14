@@ -1,6 +1,9 @@
 Changes log for Parse-CPAN-Distributions
 ========================================
 
+0.14    2014-10-14
+        - fixed license fields in META.json to be lists.
+
 0.13    2014-08-06
         - fixed POD typo.
 

@@ -1,20 +1,25 @@
 {
     "name" : "Parse-CPAN-Distributions",
-    "version" : "0.13",
+    "version" : "0.14",
     "abstract" : "Provides an index for current CPAN distributions",
     "author" : [
         "Barbie <barbie@cpan.org>"
     ],
-    "release_status" : "stable",
+
+    "license": [ "artistic_2" ],
     "dynamic_config" : 0,
-    "generated_by" : "Hand 1.0",
-    "license" : [
-        "artistic_2"
-    ],
-    "meta-spec" : {
-        "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-        "version" : "2"
+    "release_status" : "stable",
+    "meta-spec": {
+        "version": "2",
+        "url": "http://search.cpan.org/dist/CPAN-Meta/lib/CPAN/Meta/Spec.pm"
     },
+    "generated_by": "The Hand of Barbie 1.0",
+    "keywords" : [
+        "cpan",
+        "index",
+        "releases"
+    ],
+
     "no_index" : {
         "directory" : [
             "t",
@@ -58,12 +63,12 @@
     "provides" : {
         "Parse::CPAN::Distributions" : {
             "file" : "lib/Parse/CPAN/Distributions.pm",
-            "version" : "0.13"
+            "version" : "0.14"
         }
     },
 
     "resources": {
-        "license": "http://www.perlfoundation.org/artistic_license_2_0",
+        "license": [ "http://www.perlfoundation.org/artistic_license_2_0" ],
         "bugtracker": { "web": "http://rt.cpan.org/Public/Dist/Display.html?Name=Parse-CPAN-Distributions" },
         "repository": {
             "url": "git://github.com/barbie/Parse-CPAN-Distributions.git",
